@@ -12,8 +12,18 @@ export default new Router({
             name: 'CXC',
             component: () => import('@/views/index/index'),
             meta: {
-                title: 'CXC',
-                ENtitle: 'CXC'
+                title: 'MIXS Global',
+                ENtitle: 'MIXS Global'
+
+            }
+        },
+        {
+            path: '/download',
+            name: 'download',
+            component: () => import('@/views/index/download'),
+            meta: {
+                title: 'MIXS Global',
+                ENtitle: 'MIXS Global'
 
             }
         },
@@ -22,8 +32,8 @@ export default new Router({
             name: 'Success',
             component: () => import('@/views/index/success'),
             meta: {
-                title: 'CXC',
-                ENtitle: 'CXC'
+                title: 'MIXS Global',
+                ENtitle: 'MIXS Global'
 
             }
         },
@@ -32,8 +42,8 @@ export default new Router({
             name: 'verification',
             component: () => import('@/views/index/verification'),
             meta: {
-                title: 'CXC',
-                ENtitle: 'CXC'
+                title: 'MIXS Global',
+                ENtitle: 'MIXS Global'
 
             }
         }

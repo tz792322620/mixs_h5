@@ -57,7 +57,6 @@
               </template>
               <template #button>
                 <span  style="color: #4bb2b1;" v-show="timeTrue == true" @click="acquire">发送验证码</span>
-
                 <span  style="color: #4bb2b1;" v-show="timeTrue == false" >{{ time }}秒后重新获取</span>
               </template>
             </van-field>
@@ -211,7 +210,7 @@ export default {
         this.disabled = true
       }
       let qhxxs=[]
-      await axios.get('http://192.168.50.145:8081/user/listArea').then(res=> {
+      await axios.get('http://user.mixs.me/user/listArea').then(res=> {
         console.log(res.data)
         res.data.map((item) => {
           let qhxx = {text: item.country+('+'+item.areaNo),value:item.areaNo}
@@ -235,7 +234,7 @@ export default {
         Toast('信息不能为空');
         return false
       }
-      axios.post('http://192.168.50.145:8081/user/register',{
+      axios.post('http://user.mixs.me/user/register',{
         "areaCode": that.quhao,
         "captcha": that.yzm,
         "confirmPassword": that.qrmm,
@@ -246,7 +245,7 @@ export default {
       }).then(function (response) {
         console.log(response);
         Toast('注册成功');
-        window.location='/'
+        this.$router.push({ path: "/download" });
       }).catch(function (error) {
         Toast(error.msg);
         // location.reload();
@@ -269,8 +268,19 @@ export default {
     acquire() {
       let that = this
       let type = 0
+      let sj = ''
+      if(this.quhao == '86'){
+         sj = this.sjh
+      }else {
+         sj = this.quhao + this.sjh
+      }
+
       type = !that.xsyx ? 0 : 1;
-      axios.get('http://192.168.50.145:8081/user/sendCaptcha?to='+that.sjh+'&type='+type).then(function (response) {
+      axios.post('http://user.mixs.me/captcha/registerCaptcha',{
+        "captchaType": 0,
+        "mailOrPhone": sj,
+        "type": type
+      }).then(function (response) {
         console.log(response);
         Toast('发送成功');
         that.timeTrue = false;
