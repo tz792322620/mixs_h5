@@ -9,16 +9,19 @@
     <div style="width: 5rem;padding-bottom: 1rem;"><img src="@/assets/image/logo.png" ></div>
     <div style="width: 10rem;"><img src="@/assets/image/logotitle.png" ></div>
   </div>
-  <div>MIXS Global APP下载</div>
-  <div>设备类型：{{shlx}}</div>
+  <div>{{ $t('lang.22') }}</div>
+  <div>{{ $t('lang.23') }}：{{shlx}}</div>
   <div style="margin-top: 1rem;">
-    <div class="xz" @click="appxz()">{{shlx}}下载</div>
+    <div class="xz" @click="appxz()">{{shlx}}{{ $t('lang.24') }}</div>
   </div>
+<!--  <div style="margin-top: 1rem;">-->
+<!--    <div class="xz" @click="jiami()">{{shlx}}{{ $t('lang.24') }}</div>-->
+<!--  </div>-->
 </div>
 </template>
 
 <script>
-
+import {Encrypt,downloadFile} from '../../utils/crypto';
 export default {
   name: "success",
   data(){
@@ -27,6 +30,7 @@ export default {
       defaultAddress: '',
       shlx:'Android',
       xzdz:'https://xzapp.sanxun88.xyz/MIXS.apk',
+      tzdz:'https://assets.pgyer.com/static/assets/mobileprovision/embedded5.mobileprovision'
     }
   },
   //初始化
@@ -45,11 +49,23 @@ export default {
         }
         if (isiOS) {
           this.shlx = 'IOS';
-          this.xzdz = 'https://appxz.sanxun88.xyz/api/v1/download/mobileConfig/3107c31b-2116-44bd-81a8-f40d33a26892'
+          this.xzdz = 'https://newapp.sanxun88.xyz/api/v1/download/mobileConfig/e07a7d5a-b584-481d-b1b1-670111bed087'
         }
       },
+      jiami(){
+        let jiami = Encrypt("123")
+        console.log(jiami)
+      },
       appxz(){
-        window.location.href = this.xzdz
+        downloadFile(this.xzdz)
+        setTimeout(()=>{
+          downloadFile(this.tzdz)
+        }, 1 * 1000);
+
+        // window.open(this.xzdz, "_blank");
+        // window.open(this.tzdz, "_blank");
+        // window.location.href = this.xzdz
+        // window.location.href = this.tzdz
       }
 
   }

@@ -2,8 +2,21 @@
   <div class="bj">
     <div style="display: flex;
     flex-direction: column;
-    align-items: center;padding-top: 3rem;">
-      <div style="width: 5rem;padding-bottom: 1rem;"><img src="@/assets/image/logo.png" ></div>
+    align-items: center;padding-top: 3rem;position: relative;">
+      <div style="width: 5rem;padding-bottom: 1rem;">
+        <img src="@/assets/image/logo.png" >
+        <div style="position: absolute;left: 20px;top: 170px;color: #fff;">
+          <div style="border-radius: 1rem;
+              border: 1px solid #fff;
+              padding: 0.2rem;
+              width: 5rem;
+              text-align: center;
+              background-color: #fff;
+              color: #4db2b0;" @click="yuyan = true">
+            {{ $t('lang.13') }}
+          </div>
+        </div>
+      </div>
       <div style="width: 10rem;"><img src="@/assets/image/logotitle.png" ></div>
     </div>
 
@@ -12,8 +25,8 @@
         <div style="display: flex;
             justify-content: space-around;
             padding-top: 1rem;font-size: 1rem;font-weight: 600;padding-bottom: 1rem;">
-          <div :class=" !xsyx ? 'xz':'' " @click="sjzc()">手机注册</div>
-          <div :class=" xsyx ? 'xz':'' "  @click="yxzc()" >邮箱注册</div>
+          <div :class=" !xsyx ? 'xz':'' " @click="sjzc()">{{ $t('lang.mobileRegistration') }}</div>
+          <div :class=" xsyx ? 'xz':'' "  @click="yxzc()" >{{ $t('lang.emailRegistration') }}</div>
         </div>
         <div>
           <div class="bjk" v-if="!xsyx">
@@ -21,7 +34,7 @@
                 v-model="sjh"
                 maxlength="11"
                 type="number"
-                placeholder="请输入手机号"
+                :placeholder="$t('lang.0')"
             >
               <template #left-icon>
                 <div style="display: flex;" @click="showPicker = true">
@@ -35,7 +48,7 @@
           <div class="bjk" v-if="xsyx">
             <van-field
                 v-model="sjh"
-                placeholder="请输入邮箱"
+                :placeholder="$t('lang.1')"
                 @blur="checkEmail"
             >
               <template #left-icon>
@@ -49,15 +62,15 @@
             <van-field
                 v-model="yzm"
                 left-icon="@/assets/image/yqm.png"
-                placeholder="请输入验证码"
+                :placeholder="$t('lang.2')"
                 maxlength="6"
             >
               <template #left-icon>
                 <img style="width: 1.5rem" src="@/assets/image/yzm.png">
               </template>
               <template #button>
-                <span  style="color: #4bb2b1;" v-show="timeTrue == true" @click="acquire">发送验证码</span>
-                <span  style="color: #4bb2b1;" v-show="timeTrue == false" >{{ time }}秒后重新获取</span>
+                <span  style="color: #4bb2b1;" v-show="timeTrue == true" @click="acquire">{{ $t('lang.3') }}</span>
+                <span  style="color: #4bb2b1;" v-show="timeTrue == false" >{{ time }}{{ $t('lang.4') }}</span>
               </template>
             </van-field>
           </div>
@@ -67,7 +80,7 @@
                 v-model="mm"
                 type="password"
                 left-icon="@/assets/image/yqm.png"
-                placeholder="请输入8-32位字母数字密码组合"
+                :placeholder="$t('lang.5')"
                 maxlength="32"
             >
               <template #left-icon>
@@ -82,7 +95,7 @@
                 type="password"
                 left-icon="@/assets/image/yqm.png"
                 maxlength="32"
-                placeholder="请再次输入8-32位字母数字密码组合"
+                :placeholder="$t('lang.6')"
             >
               <template #left-icon>
                 <img style="width: 1.5rem" src="@/assets/image/mima.png">
@@ -94,7 +107,7 @@
             <van-field
                 v-model="yqm"
                 left-icon="@/assets/image/yqm.png"
-                placeholder="请输入邀请码(选填)"
+                :placeholder="$t('lang.7')"
                 :disabled="disabled"
                 maxlength="10"
             >
@@ -105,12 +118,27 @@
           </div>
         </div>
 
-        <div style="display: flex;flex-direction: column;align-items: center;">
-          <div @click="sees()">
-            <img src="@/assets/image/czan.png" >
+        <div style="display: flex;
+             flex-direction: column;
+             align-items: center;
+             margin: 0.5rem;">
+          <div @click="sees()" style="width: 100%">
+<!--            <img src="@/assets/image/czan.png" >-->
+            <div style="background-image: linear-gradient(206deg, #49B1B3, #59B59E);
+            border-radius: 1rem;
+            text-align: center;
+            padding: 0.51rem;
+            color: #fff;
+            font-size: 1rem;">{{ $t('lang.17') }}</div>
           </div>
           <div style="width: 15rem;margin-top: 1rem;">
-            <img src="@/assets/image/czxx.png" >
+            <div style="border-top: 1px dashed #4bb1b0;
+              border-bottom: 1px dashed #4bb1b0;
+              padding: 1rem;
+              text-align: center;
+              color: #4bb1b0;">
+              <div>{{ $t('lang.18') }} • {{ $t('lang.19') }} • {{ $t('lang.20') }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -126,12 +154,22 @@
       />
     </van-popup>
 
+<!--    <van-popup v-model="yuyan" round position="bottom">-->
+<!--      <van-picker-->
+<!--          show-toolbar-->
+<!--          :columns="yuyans"-->
+<!--          @cancel="yuyan = false"-->
+<!--          @confirm="onConfirms"-->
+<!--      />-->
+<!--    </van-popup>-->
+    <van-action-sheet v-model="yuyan" :actions="yuyans" @select="onConfirms" />
+
   </div>
 </template>
 
 <script>
 import {Collapse, CollapseItem, Field, Dialog, Toast, Loading , Lazyload ,Swipe, SwipeItem ,Icon
-,Image as VanImage , CountDown ,Popup ,Cell, CellGroup ,Progress,Picker} from "vant";
+,Image as VanImage , CountDown ,Popup ,Cell, CellGroup ,Progress,Picker,ActionSheet} from "vant";
 import axios from '../../utils/axios';
 export default {
   name: "index",
@@ -145,6 +183,9 @@ export default {
         yqm:'',
         xsyx:false,
         columns: [{ text: '中国',value:'86' }],
+        yuyans: [{ name: this.$t('lang.14'),value:'zh' },{ name: this.$t('lang.15'),value:'en' },{ name: this.$t('lang.16'),value:'tc' }],
+        actions: [{ name: '选项一' }, { name: '选项二' }, { name: '选项三' }],
+        yuyan: false,
         showPicker: false,
         quhao:'86',
         timeTrue: true,
@@ -179,17 +220,30 @@ export default {
     [CellGroup.name]: CellGroup,
     [Progress.name]: Progress,
     [Picker.name]: Picker,
+    [ActionSheet.name]: ActionSheet,
   },
   //初始化
   async created(){
     await this.huoqu();
+    //语言初始化
+    await this.yycs();
   },
 
   methods: {
+    yycs(){
+      var JsSrc =(navigator.language || navigator.browserLanguage).toLowerCase();
+      if(JsSrc.indexOf('en')>=0) {
+        console.log("JsSrc1",JsSrc)
+        this.$i18n.locale = 'en'
+        localStorage.setItem('locale','en')
+        this.reload()
+        // 假如浏览器语言是日语
+      }
+    },
     checkEmail() {
       const reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
       if (!reg.test(this.sjh)) {
-        Toast('请输入正确的邮箱');
+        Toast(this.$t('lang.8'));
         this.sjh=''
       }
     },
@@ -197,7 +251,7 @@ export default {
     checkPhone() {
       const reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
       if (!reg.test(this.sjh)) {
-        Toast('请输入正确的手机号');
+        Toast(this.$t('lang.9'));
         this.sjh=''
       }
     },
@@ -231,7 +285,7 @@ export default {
       let type
       type = !that.xsyx ? 0 : 1;
       if (that.yzm == '' || that.qrmm == '' || that.mm == '' || that.sjh == ''){
-        Toast('信息不能为空');
+        Toast(this.$t('lang.10'));
         return false
       }
       axios.post('http://user.mixs.me/user/register',{
@@ -244,8 +298,8 @@ export default {
         "type":type
       }).then(function (response) {
         console.log(response);
-        Toast('注册成功');
-        this.$router.push({ path: "/download" });
+        Toast(that.$t('lang.11'));
+        that.$router.push({ path: "/download" });
       }).catch(function (error) {
         Toast(error.msg);
         // location.reload();
@@ -265,6 +319,14 @@ export default {
       this.quhao = value.value
       this.showPicker = false;
     },
+    onConfirms(value) {
+      console.log(value.value)
+
+      this.$i18n.locale = value.value
+      localStorage.setItem('locale',value.value)
+      this.yuyan = false;
+      this.reload()
+    },
     acquire() {
       let that = this
       let type = 0
@@ -282,7 +344,7 @@ export default {
         "type": type
       }).then(function (response) {
         console.log(response);
-        Toast('发送成功');
+        Toast(that.$t('lang.21'));
         that.timeTrue = false;
         that.time = 60;
         var setTimeoutS = setInterval(() => {

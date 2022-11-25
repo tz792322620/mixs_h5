@@ -21,7 +21,6 @@ export default {
     // 返回上一级
     toGO() {
       window.history.back(-1);
-
     },
   },
 };

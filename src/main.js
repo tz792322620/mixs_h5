@@ -30,7 +30,8 @@ const i18n = new VueI18n({
   locale: localStorage.getItem('locale') || 'zh',   //从localStorage里获取用户中英文选择，没有则默认中文
   messages: {
     'zh': require('@/assets/lang/zh.js'),
-    'en': require('@/assets/lang/en.js')
+    'en': require('@/assets/lang/en.js'),
+    'tc': require('@/assets/lang/tc.js')
   }
 });
 
