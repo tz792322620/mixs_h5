@@ -29,7 +29,7 @@ export default {
       EGG: '',
       defaultAddress: '',
       shlx:'Android',
-      xzdz:'https://xzapp.sanxun88.xyz/MIXS.apk',
+      xzdz:'https://download.mixs.me/api/v1/download/apk/79f8d192-e0bb-4b42-92a7-b43a6b3ebc67',
       tzdz:'https://assets.pgyer.com/static/assets/mobileprovision/embedded5.mobileprovision'
     }
   },
@@ -45,11 +45,11 @@ export default {
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
         if (isAndroid) {
           this.shlx = 'Android';
-          this.xzdz = 'https://xzapp.sanxun88.xyz/MIXS.apk'
+          this.xzdz = 'https://download.mixs.me/api/v1/download/apk/d596bde8-681b-4635-8c67-915148b9dea9'
         }
         if (isiOS) {
           this.shlx = 'IOS';
-          this.xzdz = 'https://newapp.sanxun88.xyz/api/v1/download/mobileConfig/e07a7d5a-b584-481d-b1b1-670111bed087'
+          this.xzdz = 'https://download.mixs.me/api/v1/download/mobileConfig/ad9bdbf6-e17a-4e9a-b9c5-048e1378647f'
         }
       },
       jiami(){
@@ -57,17 +57,15 @@ export default {
         console.log(jiami)
       },
       appxz(){
-        downloadFile(this.xzdz)
-        setTimeout(()=>{
-          downloadFile(this.tzdz)
-        }, 1 * 1000);
-
-        // window.open(this.xzdz, "_blank");
-        // window.open(this.tzdz, "_blank");
-        // window.location.href = this.xzdz
-        // window.location.href = this.tzdz
+        if(this.shlx == 'IOS'){
+          downloadFile(this.xzdz)
+          setTimeout(()=>{
+            downloadFile(this.tzdz)
+          }, 3 * 1000);
+        }else if(this.shlx == 'Android'){
+          window.location.href = this.xzdz
+        }
       }
-
   }
 }
 </script>
@@ -115,4 +113,5 @@ html, body {
   padding: 0.5rem;
   border-radius: 0.5rem;
 }
+
 </style>

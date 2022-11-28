@@ -34,7 +34,7 @@ export const lang = {
     22: 'MIXS Global APP下载',
     23: '设备类型',
     24: '下载',
-
+    25: 'APP 下载',
 
 
 }

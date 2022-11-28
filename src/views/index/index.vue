@@ -144,7 +144,26 @@
       </div>
 
     </div>
-
+    <div class="footer">
+      <div style=" display: flex;flex-direction: row;align-items: center;">
+        <div>
+          <img width="50rem" src="@/assets/image/logo1.png" >
+        </div>
+        <div style="color: #fff;margin-left: 1rem;">
+          <div>MIXS Global</div>
+          <div>★★★★★(20k+)</div>
+        </div>
+        <div style="margin-left: 6rem;color: #fff;" @click="download()">
+          <div style="background-image: linear-gradient(206deg, rgb(73, 177, 179), rgb(89, 181, 158));
+    border-radius: 5rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    width: 100px;
+    height: 30px;
+    line-height: 30px;">{{ $t('lang.25') }}</div>
+        </div>
+      </div>
+    </div>
     <van-popup v-model="showPicker" round position="bottom">
       <van-picker
           show-toolbar
@@ -280,6 +299,9 @@ export default {
       console.log(qhxxs)
       this.columns = qhxxs
     },
+    download(){
+      this.$router.push({ path: "/download" });
+    },
     sees(){
       let that = this
       let type
@@ -367,6 +389,15 @@ export default {
 }
 </script>
 <style>
+.footer{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  background: #00000087;
+}
+
 .bj{
   background-image: linear-gradient(206deg, #49B1B3, #59B59E);
   height: 60rem;

@@ -33,4 +33,5 @@ export const lang = {
     22: 'MIXS Global APP download',
     23: 'Device Type',
     24: 'Download',
+    25: 'GET THE APP',
 }
